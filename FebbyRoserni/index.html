@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Febby Roserni - Digital CV</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #78c6ed;
+            --primary-light: #a1d7f5;
+            --primary-dark: #5ba8d3;
+            --accent-pink: #ffd1dc;
+            --accent-purple: #e0ccf5;
+            --accent-yellow: #fff4c2;
+            --text-dark: #333355;
+            --text-muted: #6e7179;
+            --white: #ffffff;
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            background-color: #f9fdff;
+            position: relative;
+        }
+        
+        .fancy-title {
+            font-family: 'Dancing Script', cursive;
+            color: var(--primary-dark);
+        }
+        
+        .bubble-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-light), var(--accent-pink), var(--accent-purple));
+            opacity: 0.15;
+            filter: blur(2px);
+            animation: float linear infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0);
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+            }
+        }
+        
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: var(--transition);
+        }
+        
+        .glassmorphism:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px 0 rgba(31, 38, 135, 0.15);
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--accent-pink));
+            border-radius: 5px;
+        }
+        
+        .avatar-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            margin: 0 auto;
+        }
+        
+        .avatar {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .skill-item, .tool-item, .language-item {
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            padding: 10px 15px;
+            margin: 5px;
+            display: inline-block;
+            transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .skill-item:hover, .tool-item:hover, .language-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            background-color: var(--primary-light);
+            color: var(--white);
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-light);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            transition: var(--transition);
+        }
+        
+        .contact-item:hover .contact-icon {
+            transform: rotate(15deg) scale(1.1);
+            background-color: var(--primary-dark);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            z-index: 1;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 20px;
+            width: 2px;
+            height: calc(100% - 15px);
+            background-color: var(--primary-light);
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .nav-link {
+            color: var(--text-dark);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            transition: var(--transition);
+            margin: 0 5px;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--white);
+            background-color: var(--primary);
+        }
+        
+        .btn-custom {
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: 25px;
+            padding: 10px 25px;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .btn-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(45deg, var(--primary-dark), var(--primary));
+            color: white;
+        }
+        
+        .intro-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+        
+        .highlight {
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        /* Custom scroll bar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .avatar-container {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .timeline-item {
+                padding-left: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Bubble Animation Container -->
+    <div class="bubble-container" id="bubbleContainer"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top py-3 mb-5">
+        <div class="container">
+            <a class="navbar-brand fancy-title fs-3" href="#">Febby Roserni</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#education">Education</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#experience">Experience</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Header / Intro Section -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-4 mb-4 mb-lg-0 text-center">
+                    <div class="avatar-container mb-3">
+                        <img class="avatar" src="https://cdn.jsdelivr.net/gh/freekmurze/csp-images@main/cspsandbox/people/woman-7.jpg" alt="Febby Roserni">
+                    </div>
+                    <h1 class="fancy-title display-5 mb-2">Febby Roserni</h1>
+                    <p class="text-muted mb-3">Tax Management Student</p>
+                    <div class="d-flex justify-content-center mb-3">
+                        <a href="#contact" class="btn btn-custom"><i class="fas fa-envelope me-2"></i> Contact Me</a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="glassmorphism p-4 p-md-5">
+                        <h2 class="section-title">About Me</h2>
+                        <p class="intro-text">
+                            I'm a <span class="highlight">Tax Management diploma student</span> at Padang State University with a Social Science background from Senior High School Number 2 Bukittinggi.
+                        </p>
+                        <p class="intro-text">
+                            Currently interning at the <span class="highlight">One-Stop Administrative System in Bukittinggi</span>, where I support administrative processes handling vehicle registrations, tax payments, record keeping, and guiding clients through each step.
+                        </p>
+                        <p class="intro-text">
+                            I'm comfortable with <span class="highlight">data entry, accounting, data management, tax regulations, and cash handling</span>. I enjoy solving problems to help operations run smoothly.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Education Section -->
+    <section id="education" class="py-5">
+        <div class="container">
+            <h2 class="section-title mb-4">Education</h2>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="glassmorphism p-4 h-100">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-3 rounded-circle bg-primary bg-opacity-10 p-3">
+                                <i class="fas fa-graduation-cap fs-2 text-primary"></i>
+                            </div>
+                            <div>
+                                <h4>Padang State University</h4>
+                                <p class="text-muted mb-0">2021 - Present</p>
+                            </div>
+                        </div>
+                        <h5>Diploma Degree in Tax Management</h5>
+                        <p><i class="fas fa-map-marker-alt me-2 text-primary-light"></i> Padang, Indonesia</p>
+                        <p><strong>CGPA:</strong> 3.46 / 4.00</p>
+                        <div class="mt-3">
+                            <p><strong>Skills Developed:</strong></p>
+                            <div>
+                                <span class="skill-item"><i class="fas fa-check-circle me-1 text-primary"></i> Data Entry</span>
+                                <span class="skill-item"><i class="fas fa-check-circle me-1 text-primary"></i> Tax Knowledge</span>
+                                <span class="skill-item"><i class="fas fa-check-circle me-1 text-primary"></i> Cash Handling</span>
+                                <span class="skill-item"><i class="fas fa-check-circle me-1 text-primary"></i> Problem Solving</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="glassmorphism p-4 h-100">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-3 rounded-circle bg-primary bg-opacity-10 p-3">
+                                <i class="fas fa-school fs-2 text-primary"></i>
+                            </div>
+                            <div>
+                                <h4>Senior High School Number 2</h4>
+                                <p class="text-muted mb-0">2018 - 2021</p>
+                            </div>
+                        </div>
+                        <h5>Social Science</h5>
+                        <p><i class="fas fa-map-marker-alt me-2 text-primary-light"></i> Bukittinggi, Indonesia</p>
+                        <p>Completed my high school education with a focus on Social Science, building a strong foundation for my further studies in Tax Management.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Experience Section -->
+    <section id="experience" class="py-5">
+        <div class="container">
+            <h2 class="section-title mb-4">Work Experience</h2>
+            <div class="glassmorphism p-4 p-md-5">
+                <div class="timeline-item">
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="me-3 rounded-circle bg-primary bg-opacity-10 p-3">
+                            <i class="fas fa-briefcase fs-3 text-primary"></i>
+                        </div>
+                        <div>
+                            <h4>One-Stop Administrative System</h4>
+                            <p class="text-muted mb-0">Jan 2024 - Jun 2024</p>
+                        </div>
+                    </div>
+                    <p><i class="fas fa-map-marker-alt me-2 text-primary-light"></i> Bukittinggi, Indonesia</p>
+                    <p class="badge bg-primary-light text-dark mb-3">Internship</p>
+                    <div class="ps-4 border-start border-2 border-primary-light">
+                        <p><i class="fas fa-check me-2 text-primary"></i> Assisted in daily administrative tasks, including processing vehicle registration and tax payments for clients.</p>
+                        <p><i class="fas fa-check me-2 text-primary"></i> Provided excellent customer service by addressing inquiries and guiding visitors through the administrative processes.</p>
+                        <p><i class="fas fa-check me-2 text-primary"></i> Maintained accurate records of transactions and ensured compliance with local regulations and procedures.</p>
+                        <p><i class="fas fa-check me-2 text-primary"></i> Collaborated with team members to streamline operations and improve service delivery for the community.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Skills & Tools Section -->
+    <section id="skills" class="py-5">
+        <div class="container">
+            <h2 class="section-title mb-4">Skills & Tools</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="glassmorphism p-4 h-100">
+                        <h4 class="mb-4"><i class="fas fa-star me-2 text-primary"></i> Skills</h4>
+                        <div class="d-flex flex-wrap">
+                            <span class="skill-item">Data Entry</span>
+                            <span class="skill-item">Tax Knowledge</span>
+                            <span class="skill-item">Cash Handling</span>
+                            <span class="skill-item">Problem Solving</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="glassmorphism p-4 h-100">
+                        <h4 class="mb-4"><i class="fas fa-tools me-2 text-primary"></i> Tools</h4>
+                        <div class="d-flex flex-wrap">
+                            <span class="tool-item">Microsoft Office</span>
+                            <span class="tool-item">Google Services</span>
+                            <span class="tool-item">CapCut</span>
+                            <span class="tool-item">Signal</span>
+                            <span class="tool-item">eFaktur</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="glassmorphism p-4 h-100">
+                        <h4 class="mb-4"><i class="fas fa-language me-2 text-primary"></i> Languages</h4>
+                        <div class="d-flex flex-wrap">
+                            <span class="language-item">Indonesian (Native)</span>
+                            <span class="language-item">English (Intermediate)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <h2 class="section-title mb-4">Get In Touch</h2>
+            <div class="glassmorphism p-4 p-md-5">
+                <div class="row">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <h4 class="mb-4">Contact Information</h4>
+                        <div class="contact-item d-flex align-items-center mb-4">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <p class="mb-0 text-muted">Phone</p>
+                                <h6 class="mb-0">+6281268801370</h6>
+                            </div>
+                        </div>
+                        <div class="contact-item d-flex align-items-center mb-4">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <p class="mb-0 text-muted">Email</p>
+                                <h6 class="mb-0">febbyroserni@gmail.com</h6>
+                            </div>
+                        </div>
+                        <div class="contact-item d-flex align-items-center">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <p class="mb-0 text-muted">Location</p>
+                                <h6 class="mb-0">Bukittinggi, Indonesia</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h4 class="mb-4">Send Me a Message</h4>
+                        <form>
+                            <div class="mb-3">
+                                <input type="text" class="form-control rounded-pill" placeholder="Your Name" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control rounded-pill" placeholder="Your Email" required>
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control rounded-4" rows="5" placeholder="Your Message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-custom"><i class="fas fa-paper-plane me-2"></i> Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-4 bg-light">
+        <div class="container text-center">
+            <p class="mb-0">© 2024 Febby Roserni | Digital CV Portfolio</p>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Create animated bubbles
+        document.addEventListener('DOMContentLoaded', function() {
+            const bubbleContainer = document.getElementById('bubbleContainer');
+            const colors = [
+                'rgba(120, 198, 237, 0.3)',  // Light blue
+                'rgba(255, 209, 220, 0.3)',  // Pink
+                'rgba(224, 204, 245, 0.3)',  // Purple
+                'rgba(255, 244, 194, 0.3)'   // Yellow
+            ];
+            
+            // Create 20 bubbles
+            for (let i = 0; i < 20; i++) {
+                createBubble();
+            }
+            
+            // Create a new bubble every 3 seconds
+            setInterval(createBubble, 3000);
+            
+            function createBubble() {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                // Random size between 30px and 150px
+                const size = Math.random() * 120 + 30;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                
+                // Random position along the width of the container
+                const posX = Math.random() * 100;
+                bubble.style.left = `${posX}%`;
+                
+                // Start from bottom
+                bubble.style.bottom = '-100px';
+                
+                // Random animation duration between 15 and 40 seconds
+                const duration = Math.random() * 25 + 15;
+                bubble.style.animationDuration = `${duration}s`;
+                
+                // Random color
+                const colorIndex = Math.floor(Math.random() * colors.length);
+                bubble.style.backgroundColor = colors[colorIndex];
+                
+                // Add bubble to container
+                bubbleContainer.appendChild(bubble);
+                
+                // Remove bubble when animation ends
+                setTimeout(() => {
+                    bubble.remove();
+                }, duration * 1000);
+            }
+            
+            // Active navigation state based on scroll position
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (scrollY >= (sectionTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
